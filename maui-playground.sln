@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.13.35806.99 d17.13
+VisualStudioVersion = 17.13.35806.99
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "maui-playground", "maui-playground\maui-playground.csproj", "{215DC136-B896-42F1-A07F-8D2E58F10190}"
 EndProject
@@ -9,7 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{02EA
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{869A360D-D307-4FF7-A7D4-C28A3228A1EF}"
 	ProjectSection(SolutionItems) = preProject
-		macos-build.yml = macos-build.yml
+		.github\workflows\macos-build.yml = .github\workflows\macos-build.yml
 	EndProjectSection
 EndProject
 Global
