@@ -2,10 +2,10 @@ name: MacOS Build
 
 on:
   push:
-	branches:
-	  - master
+    branches:
+    - master
 
 jobs:
   build:
     name: Build
-  	runs-on: macos-latest
+    runs-on: macos-latest
