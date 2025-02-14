@@ -1,0 +1,11 @@
+name: MacOS Build
+
+on:
+  push:
+	branches:
+	  - master
+
+jobs:
+  build:
+    name: Build
+  	runs-on: macos-latest
