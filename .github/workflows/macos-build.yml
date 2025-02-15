@@ -1,6 +1,12 @@
+name: MacOS Build and Sign
+
+on:
+  push:
+    branches: master
+
 jobs:
   build:
-    name: MacOS Build
+    name: Build
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4
