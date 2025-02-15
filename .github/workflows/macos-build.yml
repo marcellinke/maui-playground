@@ -1,8 +1,10 @@
-name: MacOS Build
-on:
-  push:
-    branches: master
 jobs:
   build:
-    name: Build
+    name: MacOS Build
     runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup XCode version
+        uses: maxim-lobanov/setup-xode@v1.6.0
+        with:
+          xcode-version: 16.2
