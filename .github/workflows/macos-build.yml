@@ -53,7 +53,7 @@ jobs:
           api-key-id: ${{ secrets.APPLE_KEY_ID }}
           api-private-key: ${{ secrets.APPLE_PRIVATE_KEY }}
       - name: Move provisioning profile
-        run: mv "/Users/runner/Library/MobileDevice/Provisioning Profiles/*.mobileprovision" "/Users/runner/Library/MobileDevice/Provisioning Profiles/*.provisionprofile"
+        run: cp "MacCatalyst_Test_App.provisionprofile" "/Users/runner/Library/MobileDevice/Provisioning Profiles/MacCatalyst_Test_App.provisionprofile"
       - name: Set Signing Identity
         id: signing-identity
         run: |
