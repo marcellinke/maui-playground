@@ -39,8 +39,10 @@ jobs:
       - name: Import Code-Signing Certificates
         run: |
           security import test-certificate.p12 -k build.keychain -P "${{ secrets.APPLE_SIGNING_CERTIFICATE_PASSWORD }}" -T /usr/bin/codesign
+          security import mac-installer.p12 -k build.keychain -P "${{ secrets.APPLE_SIGNING_CERTIFICATE_PASSWORD }}" -T /usr/bin/packagesign
           security set-key-partition-list -S apple-tool:,apple: -s -k "" build.keychain
           security find-identity -v -p codesigning
+          security find-identity -v -p packagesigning
 
       - name: Download Apple Provisioning Profiles
         uses: apple-actions/download-provisioning-profiles@v1
@@ -56,19 +58,20 @@ jobs:
         run: |
           SIGNING_IDENTITY=$(security find-identity -v -p codesigning | grep -oE '"[^"]+"' | head -n 1 | tr -d '"')
           echo "SIGNING_IDENTITY=$SIGNING_IDENTITY" >> $GITHUB_ENV
-
+          PACKAGE_SIGNING_IDENTITY=$(security find-identity -v -p packagesigning | grep -oE '"[^"]+"' | head -n 1 | tr -d '"')
+          echo "PACKAGE_SIGNING_IDENTITY=$PACKAGE_SIGNING_IDENTITY" >> $GITHUB_ENV"
       - name: Build
         run: |
-          dotnet publish maui-playground/maui-playground.csproj -f net8.0-maccatalyst -c Release -p:ArchiveOnBuild=true -p:EnableAssemblyILStripping=false -p:CodesignKey="${{ env.SIGNING_IDENTITY }}"
+          dotnet publish maui-playground/maui-playground.csproj -f net8.0-maccatalyst -c Release -p:MtouchLink Full -p:CreatePackage=true -p:EnableCodeSigning=true -p:EnablePackageSigning=true -p:CodesignKey="${{ env.SIGNING_IDENTITY }}" -p:PackageSignKey="${{ env.PACKAGE_SIGNING_IDENTITY }}" 
 
       - name: Notarize App
         run: |
-          xcrun notarytool submit maui-playground/bin/Release/net8.0-maccatalyst/maccatalyst-x64/maui-playground.app --apple-id "${{ secrets.APPLE_ISSUER_ID }}" --team-id "${{ secrets.APPLE_TEAM_ID }}" --password "${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}" --wait
+          xcrun notarytool submit maui-playground/bin/Release/net8.0-maccatalyst/maccatalyst-x64/maui-playground.pkg --apple-id "${{ secrets.APPLE_ISSUER_ID }}" --team-id "${{ secrets.APPLE_TEAM_ID }}" --password "${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}" --wait
 
       - name: Staple Notarization
         run: |
-          xcrun stapler staple maui-playground/bin/Release/net8.0-maccatalyst/maccatalyst-x64/maui-playground.app
+          xcrun stapler staple maui-playground/bin/Release/net8.0-maccatalyst/maccatalyst-x64/maui-playground.pkg
 
       - name: Upload to App Store Connect
         run: |
-          xcrun altool --upload-app --type macos --file maui-playground/bin/Release/net8.0-maccatalyst/maccatalyst-x64/maui-playground.app --username "${{ secrets.APPLE_ISSUER_ID }}" --password "${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}"
+          xcrun altool --upload-app --type macos --file maui-playground/bin/Release/net8.0-maccatalyst/maccatalyst-x64/maui-playground.pkg --username "${{ secrets.APPLE_ISSUER_ID }}" --password "${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}"
