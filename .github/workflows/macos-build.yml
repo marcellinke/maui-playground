@@ -63,7 +63,7 @@ jobs:
 
       - name: Notarize App
         run: |
-          xcrun altool --notarize-app --primary-bundle-id "${{ secrets.APPLE_BUNDLE_ID }}" --username "${{ secrets.APPLE_ISSUER_ID }}" --password "${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}" --file maui-playground/bin/Release/net8.0-maccatalyst/**/*.app
+          xcrun notarytool submit maui-playground/bin/Release/net8.0-maccatalyst/**/*.app --apple-id "${{ secrets.APPLE_ISSUER_ID }}" --team-id "${{ secrets.APPLE_TEAM_ID }}" --password "${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}" --wait
 
       - name: Staple Notarization
         run: |
