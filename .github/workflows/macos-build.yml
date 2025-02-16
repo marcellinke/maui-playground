@@ -52,13 +52,14 @@ jobs:
           api-private-key: ${{ secrets.APPLE_PRIVATE_KEY }}
 
       - name: Set Signing Identity
+        id: signing-identity
         run: |
           SIGNING_IDENTITY=$(security find-identity -v -p codesigning | grep -oE '"[^"]+"' | head -n 1 | tr -d '"')
           echo "SIGNING_IDENTITY=$SIGNING_IDENTITY" >> $GITHUB_ENV
 
       - name: Build
         run: |
-          dotnet publish maui-playground/maui-playground.csproj -f net8.0-maccatalyst -c Release -p:ArchiveOnBuild=true -p:EnableAssemblyILStripping=false /p:CodesignKey=$SIGNING_IDENTITY
+          dotnet publish maui-playground/maui-playground.csproj -f net8.0-maccatalyst -c Release -p:ArchiveOnBuild=true -p:EnableAssemblyILStripping=false -p:CodesignKey="${{ env.SIGNING_IDENTITY }}"
 
       - name: Notarize App
         run: |
