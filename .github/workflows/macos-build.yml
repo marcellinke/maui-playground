@@ -58,7 +58,7 @@ jobs:
         run: |
           SIGNING_IDENTITY=$(security find-identity -v -p codesigning | grep -oE '"[^"]+"' | head -n 1 | tr -d '"')
           echo "SIGNING_IDENTITY=$SIGNING_IDENTITY" >> $GITHUB_ENV
-          PACKAGE_SIGNING_IDENTITY=$(security find-identity -v -p productsigning | grep -oE '"[^"]+"' | head -n 1 | tr -d '"')
+          PACKAGE_SIGNING_IDENTITY=$(security find-identity -v | grep -oE '"[^"]+"' | head -n 1 | tr -d '"')
           echo "PACKAGE_SIGNING_IDENTITY=$PACKAGE_SIGNING_IDENTITY" >> $GITHUB_ENV
 
       - name: Build
