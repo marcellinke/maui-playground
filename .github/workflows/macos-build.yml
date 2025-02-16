@@ -28,9 +28,10 @@ jobs:
           p12-filepath: 'test-certificate.p12'
           p12-password: ${{ secrets.APPLE_SIGNING_CERTIFICATE_PASSWORD }}
       - name: Download Apple Provisioning Profiles
-        uses: Apple-Actions/download-provisioning-profiles@v1
+        uses: Apple-Actions/download-provisioning-profiles@v1.0.8
         with:
           bundle-id: ${{ secrets.APPLE_BUNDLE_ID }}
+          profile-type: 'MAC_APP_STORE'
           issuer-id: ${{ secrets.APPLE_ISSUER_ID }}
           api-key-id: ${{ secrets.APPLE_KEY_ID }}
           api-private-key: ${{ secrets.APPLE_PRIVATE_KEY }}
