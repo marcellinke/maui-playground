@@ -52,7 +52,8 @@ jobs:
           issuer-id: ${{ secrets.APPLE_ISSUER_ID }}
           api-key-id: ${{ secrets.APPLE_KEY_ID }}
           api-private-key: ${{ secrets.APPLE_PRIVATE_KEY }}
-
+      - name: Move provisioning profile
+        run: mv "/Users/runner/Library/MobileDevice/Provisioning Profiles/*.mobileprovision" "/Users/runner/Library/MobileDevice/Provisioning Profiles/*.provisionprofile"
       - name: Set Signing Identity
         id: signing-identity
         run: |
