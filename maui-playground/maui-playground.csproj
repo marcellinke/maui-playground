@@ -24,7 +24,7 @@
 		<ApplicationTitle>maui-playground</ApplicationTitle>
 
 		<!-- App Identifier -->
-		<ApplicationId>com.companyname.mauiplayground</ApplicationId>
+		<ApplicationId>de.music2web.mactestapp</ApplicationId>
 
 		<!-- Versions -->
 		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>

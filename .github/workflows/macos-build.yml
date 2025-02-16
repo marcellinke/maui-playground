@@ -63,12 +63,12 @@ jobs:
 
       - name: Notarize App
         run: |
-          xcrun notarytool submit maui-playground/bin/Release/net8.0-maccatalyst/**/*.app --apple-id "${{ secrets.APPLE_ISSUER_ID }}" --team-id "${{ secrets.APPLE_TEAM_ID }}" --password "${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}" --wait
+          xcrun notarytool submit maui-playground/bin/Release/net8.0-maccatalyst/maccatalyst-x64/maui-playground.app --apple-id "${{ secrets.APPLE_ISSUER_ID }}" --team-id "${{ secrets.APPLE_TEAM_ID }}" --password "${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}" --wait
 
       - name: Staple Notarization
         run: |
-          xcrun stapler staple maui-playground/bin/Release/net8.0-maccatalyst/**/*.app
+          xcrun stapler staple maui-playground/bin/Release/net8.0-maccatalyst/maccatalyst-x64/maui-playground.app
 
       - name: Upload to App Store Connect
         run: |
-          xcrun altool --upload-app --type macos --file maui-playground/bin/Release/net8.0-maccatalyst/**/*.app --username "${{ secrets.APPLE_ISSUER_ID }}" --password "${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}"
+          xcrun altool --upload-app --type macos --file maui-playground/bin/Release/net8.0-maccatalyst/maccatalyst-x64/maui-playground.app --username "${{ secrets.APPLE_ISSUER_ID }}" --password "${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}"
