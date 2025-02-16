@@ -40,6 +40,7 @@ jobs:
         run: |
           security import test-certificate.p12 -k build.keychain -P "${{ secrets.APPLE_SIGNING_CERTIFICATE_PASSWORD }}" -T /usr/bin/codesign
           security set-key-partition-list -S apple-tool:,apple: -s -k "" build.keychain
+          security find-identity -v -p codesigning
 
       - name: Download Apple Provisioning Profiles
         uses: apple-actions/download-provisioning-profiles@v1
