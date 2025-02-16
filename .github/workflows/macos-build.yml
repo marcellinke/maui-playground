@@ -63,7 +63,7 @@ jobs:
 
       - name: Build
         run: |
-          dotnet publish maui-playground/maui-playground.csproj -f net8.0-maccatalyst -c Release -p:MtouchLink=Full -p:CreatePackage=true -p:EnableCodeSigning=true -p:EnablePackageSigning=true -p:CodesignKey="${{ env.SIGNING_IDENTITY }}" -p:PackageSignKey="${{ env.PACKAGE_SIGNING_IDENTITY }}" 
+          dotnet publish maui-playground/maui-playground.csproj -f net8.0-maccatalyst -c Release -p:MtouchLink=SdkOnly -p:CreatePackage=true -p:EnableCodeSigning=true -p:EnablePackageSigning=true -p:CodesignKey="${{ env.SIGNING_IDENTITY }}" -p:CodesignProvision="MacCatalyst Test App" -p:CodesignEntitlements="Platforms\MacCatalyst\Entitlements.plist" -p:PackageSignKey="${{ env.PACKAGE_SIGNING_IDENTITY }}" 
 
       - name: Notarize App
         run: |
